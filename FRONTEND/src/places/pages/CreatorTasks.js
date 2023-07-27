@@ -30,7 +30,7 @@ const CreatorTasks = () => {
     return (
         <React.Fragment>
           <div draggable>
-           <TaskList items = {loadedTasks} />
+           <TaskList items = {CreatorTasks} />
           </div>
         </React.Fragment>
     );
