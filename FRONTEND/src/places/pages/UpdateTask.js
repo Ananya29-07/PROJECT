@@ -7,66 +7,43 @@ import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../shared/util/valida
 import { useForm } from "../../shared/hooks/form-hook";
 
 import "./TaskForm.css";
-import Card from "../../shared/components/UIElements/Card";
 
 const UpdateTask = props => {
   const taskId = useParams().taskId;
+  const creator = useParams().creator;
+  const taskDesc = useParams().taskDesc;
+  
   const [formState, inputHandler, setFormData] = useForm({
     creator: {
-        value: '',
+        value: creator,
         isValid: false
     },
     taskDesc: {
-        value: '',
+        value: taskDesc,
         isValid: false
     }
   }, false);
-
-    const fetchTask = () => {
-        setFormData({
-          creator: {
-              value: props.creator,
-              isValid: true
-          },
-          taskDesc: {
-              value: props.taskDesc,
-              isValid: true
-          }
-        }, true);    
-    };
-  
-  const taskUpdateSubmitHandler = event => {
+   
+  const taskUpdateSubmitHandler = event => { 
     event.preventDefault();
-        try {
-          let myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-          let requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: JSON.stringify({
-              creator: formState.inputs.creator.value,
-              taskDesc: formState.inputs.taskDesc.value
-            }),
-            redirect: 'follow'
-          };
+    let requestOptions = {
+      method: 'PATCH',
+      headers: myHeaders,
+      body: JSON.stringify({
+        creator: formState.inputs.creator.value,
+        taskDesc: formState.inputs.taskDesc.value
+      }),
+      redirect: 'follow'
+    };
 
-          fetch(`http://localhost:5000/tasks/${taskId}`, requestOptions) 
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
-        } catch (err) {}
+    fetch(`http://localhost:5000/tasks/${taskId}/${creator}/${taskDesc}`, requestOptions) 
+     .then(response => response.text())
+     .then(result => console.log(result))
+     .catch(error => console.log('error', error));
   };
-
-  if (props.items.length === 0) {
-    return (
-      <div className="center">
-        <Card>
-          <h2>Could not find the task!</h2>
-        </Card>
-      </div>
-    );
-  }
 
   return (
       <form className="task-form" onSubmit={taskUpdateSubmitHandler}>
@@ -91,7 +68,7 @@ const UpdateTask = props => {
           initialValue={formState.inputs.taskDesc.value}
           initialValid={formState.inputs.taskDesc.isValid}
         />
-        <Button type="submit" disabled={!formState.isValid}>UPDATE TASK</Button>
+        <Button type="submit">UPDATE TASK</Button>
     </form>
   );
 };

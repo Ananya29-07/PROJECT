@@ -12,7 +12,7 @@ const NavLinks = props => {
           <NavLink to = "/tasks/t1" exact>ALL TASKS</NavLink>
         </li>
         <li>
-          <NavLink to = "/tasks/">CREATE TASK</NavLink>
+          <NavLink to = "/tasks">CREATE TASK</NavLink>
         </li>
      </ul>
 };

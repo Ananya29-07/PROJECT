@@ -19,10 +19,10 @@ const TasksList = props => {
         <ul className="tasks-list">
             {props.items.map(taskUser => (
                 <CreatorTaskItem 
-                  taskId = {taskUser.Id} 
+                  key = {taskUser.taskId}
+                  taskId = {taskUser.taskId} 
                   creator = {taskUser.creator} 
                   taskDesc = {taskUser.taskDesc} 
-                  creatorId = {taskUser.creatorId}
                 />
             ))}
         </ul>

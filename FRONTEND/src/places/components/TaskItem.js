@@ -17,8 +17,24 @@ const TaskItem = props => {
     }
 
     const confirmDeleteHandler = () => {
+    
       setShowConfirmModal(false);
-      console.log("DELETING.....")
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      let requestOptions = {
+          method: 'DELETE',
+          headers: myHeaders,
+          redirect: 'follow'
+      };
+
+      fetch(`http://localhost:5000/tasks/${props.taskId}`, requestOptions) 
+        .then(response => response.text())
+        .then(result => {
+          console.log(result);
+          props.onDeleteTask();
+        })
+        .catch(error => console.log('error', error));
     }
 
     return (
@@ -47,7 +63,7 @@ const TaskItem = props => {
             <p>{props.taskDesc}</p>
           </div>
           <div className="task-item__actions">
-            <Button inverse to = {`/tasks/update/${props.taskId}`}>
+            <Button inverse to = {`/tasks/update/${props.taskId}/${props.creator}/${props.taskDesc}`}>
               UPDATE
             </Button>
            <Button danger onClick={showDeleteWarningHandler}>

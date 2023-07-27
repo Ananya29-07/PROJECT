@@ -2,10 +2,9 @@ import React from "react";
 
 import TasksList from "../components/TasksList";
 
-const AllTasks = () => {
+const HomePageTask = () => {
     const TASKS = [
         {
-          taskId : 't1', 
           creator : 'Ananya Gupta', 
           taskDesc : [],
           creatorId: 'c1'                
@@ -14,4 +13,4 @@ const AllTasks = () => {
     return <TasksList items = {TASKS} />  
 };
 
-export default AllTasks;
+export default HomePageTask;

@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Card from "../../shared/components/UIElements/Card";
 import './CreatorTaskItem.css';
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const CreatorTaskItem = props => {
+    const taskId = useParams().taskId;
     return (
         <li className="task-item">
             <Card className="task-item__content">

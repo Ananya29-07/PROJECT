@@ -5,7 +5,7 @@ const taskControllers = require('../controllers/task-controller');
 
 const router = express.Router();
 
-router.get('/', taskControllers.getTaskByTaskId);
+router.get('/', taskControllers.getAllTasks);
 
 router.post(
     '/', 
@@ -19,7 +19,7 @@ router.post(
 );
 
 router.patch(
-    '/:taskId',
+    '/:taskId/:creator/:taskDesc',
     [
         check('creator')
           .not()

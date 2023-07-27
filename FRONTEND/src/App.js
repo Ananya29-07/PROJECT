@@ -21,7 +21,7 @@ const App = () => {
       <Route path="/tasks/" exact>
         <NewTask/>
       </Route>
-      <Route path="/tasks/update/:taskId" exact>
+      <Route path="/tasks/update/:taskId/:creator/:taskDesc" exact>
         <UpdateTask/>
       </Route> 
       <Redirect to="/"></Redirect>

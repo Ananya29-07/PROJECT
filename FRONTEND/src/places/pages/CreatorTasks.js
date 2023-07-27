@@ -1,36 +1,41 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
-import { useParams } from "react-router-dom";
 import TaskList from "../components/TaskList";
 
-const DUMMY_TASKS = [
-    {
-        taskId : 't1',
-        creator : 'Ananya Gupta',
-        taskDesc : 'Study JavaScript',
-        creatorId: 'c1'
-    },
-    {
-        taskId : 't1',
-        creator : 'Ananya Gupta',
-        taskDesc : 'Study Node.js',
-        creatorId: 'c1'
-    },
-    {
-        taskId : 't2',
-        creator : 'Dr. Mishra',
-        taskDesc : 'Travel whole world',
-        creatorId: 'c2'
-    }
-];
-
 const CreatorTasks = () => {
-    const taskId = useParams().taskId;
-    const loadedTasks = DUMMY_TASKS.filter(tasks => tasks.taskId === taskId);
+    const [loadedTasks, setLoadedTask] = useState([]);
+    const [changedTaskList, setChangedTaskList] = useState([]);
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+   };
+
+   useEffect(() => {
+    console.log('Effect called');
+    fetch(`http://localhost:5000/tasks`, requestOptions)
+    .then(response => response.json())
+    .then(result => setLoadedTask(result))
+    .then(result => console.log(result))
+    .catch(error => setLoadedTask([]));
+
+    return(()=> {
+        setChangedTaskList(false);
+    })
+   }, [changedTaskList])
+
+   const handleChangeEvent = () => {
+    console.log('Task Deleted');
+    setChangedTaskList(true);
+   }
+  
     return (
         <React.Fragment>
           <div draggable>
-           <TaskList items = {CreatorTasks} />
+           <TaskList items = {loadedTasks} onDeleteTask={ handleChangeEvent } />
           </div>
         </React.Fragment>
     );

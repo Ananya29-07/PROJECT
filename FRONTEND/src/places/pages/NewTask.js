@@ -5,6 +5,7 @@ import Button from "../../shared/components/FormElements/Button";
 import { useForm } from "../../shared/hooks/form-hook";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../shared/util/validators";
 import "./TaskForm.css";
+import { v4 as uuidv4 } from 'uuid';
 
   const NewTask = () => {
     const [formState, inputHandler] = useForm(
@@ -30,6 +31,7 @@ import "./TaskForm.css";
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify({
+              taskId: uuidv4(),
               creator: formState.inputs.creator.value,
               taskDesc: formState.inputs.taskDesc.value
             }),
@@ -40,6 +42,8 @@ import "./TaskForm.css";
           .then(response => response.text())
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
+
+          console.log("Task Created Successfully");
         } catch (err) {}    
     };
   
